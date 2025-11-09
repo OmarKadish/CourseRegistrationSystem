@@ -1,4 +1,5 @@
-
+DROP TABLE IF EXISTS Prerequisite, Cart, Enrollment, Section, 
+Course, Term, Student, Instructor, RegistrationOfficer;
 
 --USERS----------------------
 Create Table Student( 
@@ -32,7 +33,7 @@ Create Table Course(
 CourseID int Identity(1,1) Primary Key,
 CourseCode VARCHAR(20) not null unique,
 CourseName VARCHAR(100) not null,
-Description VARCHAR(300),
+Description text,
 Credits int not null Check(Credits>0)
 );
 
