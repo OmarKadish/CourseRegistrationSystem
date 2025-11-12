@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RegistrationEntityDAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,24 @@ namespace CourseRegistrationSystem
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+
+        private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            var userData = new StudentData();
+            var dlg = new LoginDialog();
+            dlg.Owner = this;
+            dlg.ShowDialog();
+            // Process data entered by user if dialog box is accepted
+            if (dlg.DialogResult == true)
+            {
+                if (userData.LogIn(dlg.nameTextBox.Text, dlg.passwordTextBox.Password) == true)
+                    MessageBox.Show("You could be verified");
+                else
+                    MessageBox.Show("You could not be verified. Please try again.");
+            }
         }
+        private void exitButton_Click(object sender, RoutedEventArgs e) { this.Close(); }
+        public MainWindow() { InitializeComponent(); }
+        private void Window_Loaded(object sender, RoutedEventArgs e) { }
     }
 }
