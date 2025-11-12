@@ -26,8 +26,9 @@ namespace RegistrationEntityDAL.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\RegistrationS" +
-            "ystemDB.mdf;Integrated Security=True;Connect Timeout=30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=coursereg-sqlserver.database.windows.net;Initial Catalog=CourseRegist" +
+            "rationDB;Persist Security Info=True;User ID=malikadmin;Password=4150CRproj;Trust" +
+            "ServerCertificate=True")]
         public string DbContext {
             get {
                 return ((string)(this["DbContext"]));
