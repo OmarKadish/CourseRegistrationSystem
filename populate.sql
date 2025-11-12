@@ -30,8 +30,8 @@ INSERT INTO Section (CourseID, InstructorID, TermID, Room, Capacity, StartTime, 
 VALUES
 (1, 1, 1, 'CHS 102', 40, '10:00', '11:20'),
 (2, 1, 1, 'CHS 210', 35, '13:00', '14:20'),
-(3, 2, 2, 'ERB 205', 50, '09:00', '10:20'),
-(4, 2, 1, 'CHS 115', 45, '15:00', '16:20');
+(3, 2, 1, 'ERB 205', 50, '09:00', '10:20'),
+(4, 2, 2, 'CHS 115', 45, '15:00', '16:20');
 
 INSERT INTO Enrollment (StudentID, SectionID, Status)
 VALUES
