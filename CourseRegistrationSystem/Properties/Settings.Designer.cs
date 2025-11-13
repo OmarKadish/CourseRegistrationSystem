@@ -22,17 +22,5 @@ namespace CourseRegistrationSystem.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=coursereg-sqlserver.database.windows.net;Initial Catalog=CourseRegist" +
-            "rationDB;Persist Security Info=True;User ID=malikadmin;Password=4150CRproj;Trust" +
-            "ServerCertificate=True")]
-        public string CourseDB {
-            get {
-                return ((string)(this["CourseDB"]));
-            }
-        }
     }
 }
