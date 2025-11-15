@@ -1,8 +1,8 @@
-INSERT INTO Student (FirstName, LastName, Email, ContactNo, Address, BirthDate, Major, StudentYear)
+INSERT INTO Student (FirstName, LastName, Email, ContactNo, Address, BirthDate, Major, StudentYear, Password)
 VALUES
-('Adam', 'Saleh', 'adams@uwindsor.ca', '519-555-1111', 'Windsor, ON', '2003-02-15', 'Computer Science', 2),
-('Islam', 'makhachev', 'islamm.h@uwindsor.ca', '519-555-2222', 'Windsor, ON', '2004-11-03', 'Software Engineering', 1),
-('John', 'Jones', 'john.l@uwindsor.ca', '226-555-3333', 'Windsor, ON', '2002-07-08', 'Computer Science', 3);
+('Adam', 'Saleh', 'adams@uwindsor.ca', '519-555-1111', 'Windsor, ON', '2003-02-15', 'Computer Science', 2, 'as1234'),
+('Islam', 'makhachev', 'islamm.h@uwindsor.ca', '519-555-2222', 'Windsor, ON', '2004-11-03', 'Software Engineering', 1, 'i234'),
+('John', 'Jones', 'john.l@uwindsor.ca', '226-555-3333', 'Windsor, ON', '2002-07-08', 'Computer Science', 3, 'jj1234');
 
 INSERT INTO Instructor (FirstName, LastName, Email, Department, OfficeLocation)
 VALUES

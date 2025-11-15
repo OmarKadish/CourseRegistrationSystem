@@ -11,6 +11,7 @@ ContactNo VARCHAR(20),
 Address VARCHAR(200), 
 BirthDate DATE,
 Major VARCHAR(50), 
+Password VARCHAR(100) not null,
 StudentYear int Check(StudentYear>=1 and StudentYear<=4));
 
 Create Table Instructor(
@@ -19,6 +20,7 @@ FirstName VARCHAR(50) not null,
 LastName VARCHAR(50) not null,
 Email VARCHAR(100) not null unique, 
 Department VARCHAR(50),
+Password VARCHAR(100) not null,
 OfficeLocation VARCHAR(100)
 );
 Create Table RegistrationOfficer (
