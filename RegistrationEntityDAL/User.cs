@@ -7,11 +7,11 @@ using System;
 using System.Data.SqlClient;
 namespace RegistrationEntityDAL
 {
-    public class Student
+    public class User
     {
         private readonly string _connString;
 
-        public Student(string connectionString)
+        public User(string connectionString)
         {
             _connString = connectionString;
         }

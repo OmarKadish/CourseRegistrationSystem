@@ -8,11 +8,19 @@
         <Border Background="White" CornerRadius="8"
                 Padding="20" Width="300" HorizontalAlignment="Center" 
                 VerticalAlignment="Center" BorderBrush="White" 
-                BorderThickness="1">
+                BorderThickness="8">
             <StackPanel HorizontalAlignment="Center">
-                <TextBlock Text="Course Registration System" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" TextAlignment="Center"/>
-                <TextBlock Text="Welcome! Please log in to continue." FontSize="14" Foreground="Gray" Margin="0,0,0,20" TextAlignment="Center"/>
-                <Button Content="Login" Width="120" Height="32" x:Name="loginButton" Click="loginButton_Click"/>
+                <TextBlock Text="Welcome! Please log in to continue." 
+                           FontSize="14" Foreground="Gray" Margin="0,0,0,20" TextAlignment="Center"/>
+                <Button Content="Login" Width="120" Height="32" x:Name="loginButton" 
+                        Click="loginButton_Click"
+                        Background="DodgerBlue" Foreground="White" BorderThickness="0">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                </Button>
             </StackPanel>
         </Border>
     </Grid>

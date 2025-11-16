@@ -24,14 +24,14 @@ namespace CourseRegistrationSystem
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            var userData = new StudentData();
+            var userData = new UserData();
             var dlg = new LoginDialog();
             dlg.Owner = this;
             dlg.ShowDialog();
             // Process data entered by user if dialog box is accepted
             if (dlg.DialogResult == true)
             {
-                if (userData.LogIn(dlg.nameTextBox.Text, dlg.passwordTextBox.Password) == true)
+                if (userData.LogIn(dlg.emailTextBox.Text, dlg.passwordTextBox.Password, dlg.SelectedRole) == true)
                     MessageBox.Show("You could be verified");
                 else
                     MessageBox.Show("You could not be verified. Please try again.");

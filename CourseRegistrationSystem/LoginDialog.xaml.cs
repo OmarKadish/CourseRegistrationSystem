@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace CourseRegistrationSystem
 {
@@ -19,24 +20,29 @@ namespace CourseRegistrationSystem
     /// </summary>
     public partial class LoginDialog : Window
     {
-        public string Email => nameTextBox.Text.Trim();
+        public string Email => emailTextBox.Text.Trim();
         public string Password => passwordTextBox.Password.Trim();
+        public string SelectedRole => ((ComboBoxItem)RoleCombo.SelectedItem).Content.ToString();
 
         public LoginDialog()
         {
             InitializeComponent();
         }
 
-        private void okButton_Click(object sender, RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
-            // don’t authenticate here; just close with OK
+            if (string.IsNullOrWhiteSpace(Email)||string.IsNullOrWhiteSpace(Password))
+            {
+                MessageBox.Show("Please enter both email and password.");
+                return;
+            }
+            MessageBox.Show($"Logging in as: {SelectedRole}");
             this.DialogResult = true;
         }
-
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
-            this.Close();
-        }
+        //private void cancelButton_Click(object sender, RoutedEventArgs e)
+        //{
+           // this.DialogResult = false;
+        //  //  this.Close();
+       // }
     }
 }
