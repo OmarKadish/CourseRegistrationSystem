@@ -4,10 +4,10 @@ VALUES
 ('Islam', 'makhachev', 'islamm.h@uwindsor.ca', '519-555-2222', 'Windsor, ON', '2004-11-03', 'Software Engineering', 1, 'i234'),
 ('John', 'Jones', 'john.l@uwindsor.ca', '226-555-3333', 'Windsor, ON', '2002-07-08', 'Computer Science', 3, 'jj1234');
 
-INSERT INTO Instructor (FirstName, LastName, Email, Department, OfficeLocation)
+INSERT INTO Instructor (FirstName, LastName, Email, Department, OfficeLocation, Password)
 VALUES
-('Malik', 'Antar', 'antarm@uwindsor.ca', 'Computer Science', 'Room 304'),
-('Linda', 'Jason', 'lnjason@uwindsor.ca', 'Engineering', 'Room 221');
+('Malik', 'Antar', 'antarm@uwindsor.ca', 'Computer Science', 'Room 304', 'a12345'),
+('Linda', 'Jason', 'lnjason@uwindsor.ca', 'Engineering', 'Room 221', 'lj1234');
 
 INSERT INTO RegistrationOfficer (EmployeeName, Email, Password)
 VALUES
