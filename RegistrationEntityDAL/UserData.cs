@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace RegistrationEntityDAL
         public string LoginName { set; get; }
         public string Password { set; get; }
         public string Role { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
         public Boolean LoggedIn { set; get; }
 
         public Boolean LogIn(string loginName, string passWord, string role)
@@ -35,6 +39,7 @@ namespace RegistrationEntityDAL
             }
            
         }
+
 
     }
 }

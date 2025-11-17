@@ -39,10 +39,15 @@ namespace CourseRegistrationSystem
             MessageBox.Show($"Logging in as: {SelectedRole}");
             this.DialogResult = true;
         }
+
+        private void RoleCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
         //private void cancelButton_Click(object sender, RoutedEventArgs e)
         //{
-           // this.DialogResult = false;
+        // this.DialogResult = false;
         //  //  this.Close();
-       // }
+        // }
     }
 }
