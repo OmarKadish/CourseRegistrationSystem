@@ -24,7 +24,7 @@
                           Background="White"
                           Height="28"
                           SelectedIndex="0"
-                          Margin="0,0,0,15"
+                          Margin="0,0,0,15" SelectionChanged="RoleCombo_SelectionChanged"
                           >
                     <ComboBoxItem Content="Student"/>
                     <ComboBoxItem Content="Instructor"/>
