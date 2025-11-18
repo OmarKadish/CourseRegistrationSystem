@@ -179,6 +179,9 @@
     <Compile Include="AdminMainWindow.xaml.cs">
       <DependentUpon>AdminMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EnrollmentWindow.xaml.cs">
+      <DependentUpon>EnrollmentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InstructorMainWindow.xaml.cs">
       <DependentUpon>InstructorMainWindow.xaml</DependentUpon>
     </Compile>
@@ -186,6 +189,10 @@
       <DependentUpon>StudentMainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AdminMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EnrollmentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

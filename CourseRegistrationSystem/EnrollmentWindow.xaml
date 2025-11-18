@@ -1,0 +1,60 @@
+﻿<Window x:Class="CourseRegistrationSystem.EnrollmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseRegistrationSystem"
+        mc:Ignorable="d"
+        Title="EnrollmentWindow" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Search Bar -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <Label Content="Search Course:" VerticalAlignment="Center"/>
+            <TextBox Name="searchTextBox" Width="200" Margin="5,0"/>
+            <Button Name="searchButton" Content="Search"/>
+        </StackPanel>
+
+        <!-- Results Grid -->
+        <DataGrid Name="resultsGrid"
+       Grid.Row="1"
+       AutoGenerateColumns="False"
+       IsReadOnly="True"
+       HorizontalAlignment="Stretch"
+       VerticalAlignment="Stretch"
+       Margin="10"
+       ColumnWidth="*">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Course Code" Binding="{Binding CourseCode}" />
+                <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" />
+                <DataGridTextColumn Header="Term" Binding="{Binding TermName}" />
+                <DataGridTextColumn Header="Year" Binding="{Binding TermYear}" />
+                <DataGridTextColumn Header="Room" Binding="{Binding Room}" />
+                <DataGridTextColumn Header="Seats Remaining" Binding="{Binding SeatsRemaining}" />
+                <DataGridTemplateColumn Header="Action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Enroll" Padding="10,2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <!-- Enrollment List Button -->
+        <Button Name="enrollmentListButton"
+     Grid.Row="2"
+     Content="Enrollment List (Class List)"
+     HorizontalAlignment="Left"
+     Margin="10"
+     Padding="10,5"
+     />
+
+    </Grid>
+</Window>
