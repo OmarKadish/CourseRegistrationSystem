@@ -68,9 +68,9 @@
                         Style="{StaticResource SidebarButtonStyle}"
                         Click="Sidebar_Click"/>
 
-                <Button x:Name="BtnRegister" Content="Register"
+                <Button x:Name="BtnEnroll" Content="Enroll"
                         Style="{StaticResource SidebarButtonStyle}"
-                        Click="Sidebar_Click"/>
+                        Click="BtnEnroll_Click"/>
 
                 <Button x:Name="BtnDrop" Content="Drop Course"
                         Style="{StaticResource SidebarButtonStyle}"

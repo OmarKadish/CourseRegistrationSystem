@@ -21,10 +21,12 @@ namespace CourseRegistrationSystem
     /// </summary>
     public partial class StudentMainWindow : Window
     {
+        private UserData _currentUser;
+        
         public StudentMainWindow(UserData user)
         {
             InitializeComponent();
-            var dlg = new DALUserInfo();
+            _currentUser = user;
             StudentNameText.Text = $"{user.FirstName} {user.LastName}"; 
             
             
@@ -43,22 +45,27 @@ namespace CourseRegistrationSystem
             if (clicked == BtnSchedule) ShowPanel(SchedulePanel);
             else if (clicked == BtnBrowse) ShowPanel(BrowsePanel);
             else if (clicked == BtnCart) ShowPanel(CartPanel);
-            else if (clicked == BtnRegister) ShowPanel(RegisterPanel);
+            
             else if (clicked == BtnDrop) ShowPanel(DropPanel);
             else if (clicked == BtnProfile) ShowPanel(ProfilePanel);
         }
         private void ShowPanel(UIElement panelToShow)
         {
-            // Hide all
             SchedulePanel.Visibility = Visibility.Collapsed;
             BrowsePanel.Visibility = Visibility.Collapsed;
             CartPanel.Visibility = Visibility.Collapsed;
-            RegisterPanel.Visibility = Visibility.Collapsed;
             DropPanel.Visibility = Visibility.Collapsed;
             ProfilePanel.Visibility = Visibility.Collapsed;
 
             // Show requested
             panelToShow.Visibility = Visibility.Visible;
+        }
+        private void BtnEnroll_Click(object sender, RoutedEventArgs e)
+        {
+
+            var enrollWindow = new EnrollmentWindow(_currentUser);
+            enrollWindow.Owner = this;
+            enrollWindow.ShowDialog();
         }
     }
 }

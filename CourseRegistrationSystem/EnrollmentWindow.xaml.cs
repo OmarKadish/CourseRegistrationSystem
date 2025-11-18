@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RegistrationEntityDAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,8 @@ namespace CourseRegistrationSystem
     /// </summary>
     public partial class EnrollmentWindow : Window
     {
-
-        public EnrollmentWindow()
+        private UserData _currentUser;
+        public EnrollmentWindow(UserData user)
         {
             InitializeComponent();
         }
