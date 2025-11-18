@@ -93,9 +93,39 @@
         <Grid Grid.Column="1" Background="White" Margin="10">
 
             <!-- update later -->
-            <Grid x:Name="SchedulePanel" Visibility="Collapsed">
-                <TextBlock Text="Schedule View" FontSize="32" Margin="20"/>
+            <Grid x:Name="SchedulePanel" Visibility="Collapsed" Margin="20">
+
+                <StackPanel>
+                    <TextBlock Text="My Schedule"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Margin="0 0 0 15"/>
+
+                    <DataGrid x:Name="ScheduleGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  RowHeight="35"
+                  ColumnWidth="*"
+                  Margin="0 10 0 0"
+                  Background="WhiteSmoke"
+                  BorderBrush="Gray"
+                  BorderThickness="1">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Course Code" Binding="{Binding CourseCode}" Width="150"/>
+                            <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" Width="250"/>
+                            <DataGridTextColumn Header="Instructor" Binding="{Binding InstructorName}" Width="200"/>
+                            <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="100"/>
+                            <DataGridTextColumn Header="Days" Binding="{Binding Days}" Width="100"/>
+                            <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="150"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </StackPanel>
+
             </Grid>
+
 
             <Grid x:Name="BrowsePanel" Visibility="Collapsed">
                 <TextBlock Text="Browse Courses View" FontSize="32" Margin="20"/>
@@ -105,7 +135,7 @@
                 <TextBlock Text="Cart View" FontSize="32" Margin="20"/>
             </Grid>
 
-            <Grid x:Name="RegisterPanel" Visibility="Collapsed">
+            <Grid x:Name="EnrollPanel" Visibility="Collapsed">
                 <TextBlock Text="Registration View" FontSize="32" Margin="20"/>
             </Grid>
 

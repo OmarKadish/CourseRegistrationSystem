@@ -13,18 +13,51 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace CourseRegistrationSystem
 {
-    /// <summary>
-    /// Interaction logic for InstructorMainWindow.xaml
-    /// </summary>
     public partial class InstructorMainWindow : Window
     {
+        private UserData _currentUser;
 
         public InstructorMainWindow(UserData user)
         {
-   
             InitializeComponent();
+            _currentUser = user;
+
+            InstructorNameText.Text = $"{user.FirstName} {user.LastName}";
+
+            LoadClasses();
+        }
+
+        private void Sidebar_Click(object sender, RoutedEventArgs e)
+        {
+            Button clicked = sender as Button;
+
+            if (clicked == BtnClasses) ShowPanel(ClassesPanel);
+            else if (clicked == BtnRoster) ShowPanel(RosterPanel);
+            else if (clicked == BtnProfile) ShowPanel(ProfilePanel);
+        }
+
+        private void ShowPanel(UIElement panel)
+        {
+            ClassesPanel.Visibility = Visibility.Collapsed;
+            RosterPanel.Visibility = Visibility.Collapsed;
+            ProfilePanel.Visibility = Visibility.Collapsed;
+
+            panel.Visibility = Visibility.Visible;
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void LoadClasses()
+        {
+            // TODO: Fill later after your teammates finish Section CRUD
+            // var dal = new DALInstructor();
+            // ClassesGrid.ItemsSource = dal.GetInstructorClasses(_currentUser.UserID);
         }
     }
 }
