@@ -22,18 +22,16 @@ namespace CourseRegistrationSystem
     public partial class StudentMainWindow : Window
     {
         private UserData _currentUser;
-        
+
         public StudentMainWindow(UserData user)
         {
             InitializeComponent();
             _currentUser = user;
-            StudentNameText.Text = $"{user.FirstName} {user.LastName}"; 
-            
-            
-            
-            
+            StudentNameText.Text = $"{user.FirstName} {user.LastName}";
+            LoadCourses();
 
         }
+
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -43,21 +41,19 @@ namespace CourseRegistrationSystem
             Button clicked = sender as Button;
 
             if (clicked == BtnSchedule) ShowPanel(SchedulePanel);
-            else if (clicked == BtnBrowse) ShowPanel(BrowsePanel);
+            else if (clicked == BtnBrowse) ShowPanel(BrowseCoursesGrid);
             else if (clicked == BtnCart) ShowPanel(CartPanel);
-            
+
             else if (clicked == BtnDrop) ShowPanel(DropPanel);
             else if (clicked == BtnProfile) ShowPanel(ProfilePanel);
         }
         private void ShowPanel(UIElement panelToShow)
         {
             SchedulePanel.Visibility = Visibility.Collapsed;
-            BrowsePanel.Visibility = Visibility.Collapsed;
+            BrowseCoursesGrid.Visibility = Visibility.Collapsed;
             CartPanel.Visibility = Visibility.Collapsed;
             DropPanel.Visibility = Visibility.Collapsed;
             ProfilePanel.Visibility = Visibility.Collapsed;
-
-            // Show requested
             panelToShow.Visibility = Visibility.Visible;
         }
         private void BtnEnroll_Click(object sender, RoutedEventArgs e)
@@ -67,5 +63,18 @@ namespace CourseRegistrationSystem
             enrollWindow.Owner = this;
             enrollWindow.ShowDialog();
         }
+        private void LoadCourses()
+        {
+            var dal = new DALCourseInfo();
+            var courses = dal.GetAllCourses();
+            BrowseCoursesGrid.ItemsSource = courses;
+        }
+        private void AddToCart_Click(object sender, RoutedEventArgs e)
+        {
+            {
+
+            }
+        }
     }
 }
+

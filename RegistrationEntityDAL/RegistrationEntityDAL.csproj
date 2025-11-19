@@ -178,6 +178,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CourseData.cs" />
+    <Compile Include="DALCourseInfo.cs" />
     <Compile Include="DALUserInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
