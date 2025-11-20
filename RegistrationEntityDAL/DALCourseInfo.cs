@@ -45,6 +45,54 @@ namespace RegistrationEntityDAL
 
             return courses;
         }
+
+        public bool AddCourse(string courseCode, string courseName, string description, int credits)
+        {
+            using (SqlConnection conn = new SqlConnection(Properties.Settings.Default.DbContext))
+            {
+                string query = @"INSERT INTO Course (CourseCode, CourseName, Description, Credits) 
+                           VALUES (@CourseCode, @CourseName, @Description, @Credits)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@CourseCode", courseCode);
+                cmd.Parameters.AddWithValue("@CourseName", courseName);
+                cmd.Parameters.AddWithValue("@Description", description);
+                cmd.Parameters.AddWithValue("@Credits", credits);
+
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public List<PrerequisiteData> GetPrereqsForCourse(int courseId)
+        {
+            var list = new List<PrerequisiteData>();
+            using (var conn = new SqlConnection(Properties.Settings.Default.DbContext))
+            {
+                conn.Open();
+                var sql = @"
+                SELECT p.CourseID, p.CoursePrerequisiteID, c.CourseCode, c.CourseName
+                FROM Prerequisite p
+                JOIN Course c ON p.CoursePrerequisiteID = c.CourseID
+                WHERE p.CourseID = @id
+                ORDER BY c.CourseCode";
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", courseId);
+                    using (var rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            list.Add(new PrerequisiteData
+                            {
+                                CourseID = (int)rdr["CourseID"],
+                                CoursePrerequisiteID = (int)rdr["CoursePrerequisiteID"]
+                            });
+                        }
+                    }
+                }
+            }
+            return list;
+        }
     }
 }
 

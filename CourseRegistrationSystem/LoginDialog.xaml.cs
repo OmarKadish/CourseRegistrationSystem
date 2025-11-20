@@ -37,6 +37,8 @@ namespace CourseRegistrationSystem
                 return;
             }
             MessageBox.Show($"Logging in as: {SelectedRole}");
+            //CourseWindow courseWindow = new CourseWindow();
+            //courseWindow.Show(); //I added these to test my window
             this.DialogResult = true;
         }
 

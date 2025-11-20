@@ -181,6 +181,7 @@
     <Compile Include="CourseData.cs" />
     <Compile Include="DALCourseInfo.cs" />
     <Compile Include="DALUserInfo.cs" />
+    <Compile Include="PrerequisiteData.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
