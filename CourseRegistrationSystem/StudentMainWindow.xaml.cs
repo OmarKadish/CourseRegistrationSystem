@@ -28,8 +28,6 @@ namespace CourseRegistrationSystem
             InitializeComponent();
             _currentUser = user;
             StudentNameText.Text = $"{user.FirstName} {user.LastName}";
-            LoadCourses();
-
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
@@ -41,7 +39,7 @@ namespace CourseRegistrationSystem
             Button clicked = sender as Button;
 
             if (clicked == BtnSchedule) ShowPanel(SchedulePanel);
-            else if (clicked == BtnBrowse) ShowPanel(BrowseCoursesGrid);
+            else if (clicked == BtnBrowse) ShowPanel(BrowsePanel);
             else if (clicked == BtnCart) ShowPanel(CartPanel);
 
             else if (clicked == BtnDrop) ShowPanel(DropPanel);
@@ -50,7 +48,7 @@ namespace CourseRegistrationSystem
         private void ShowPanel(UIElement panelToShow)
         {
             SchedulePanel.Visibility = Visibility.Collapsed;
-            BrowseCoursesGrid.Visibility = Visibility.Collapsed;
+            BrowsePanel.Visibility = Visibility.Collapsed;
             CartPanel.Visibility = Visibility.Collapsed;
             DropPanel.Visibility = Visibility.Collapsed;
             ProfilePanel.Visibility = Visibility.Collapsed;
@@ -63,11 +61,12 @@ namespace CourseRegistrationSystem
             enrollWindow.Owner = this;
             enrollWindow.ShowDialog();
         }
-        private void LoadCourses()
+        private void OpenCourseWindow_Click(object sender, RoutedEventArgs e)
         {
-            var dal = new DALCourseInfo();
-            var courses = dal.GetAllCourses();
-            BrowseCoursesGrid.ItemsSource = courses;
+            Button btn = sender as Button;
+            var win = new CourseWindow();  
+            win.Owner = this;
+            win.ShowDialog();
         }
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
