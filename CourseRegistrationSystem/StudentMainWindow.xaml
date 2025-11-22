@@ -11,7 +11,6 @@
 
 
     <Window.Resources>
-        <!--Button Style -->
         <Style x:Key="SidebarButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="DodgerBlue"/>
             <Setter Property="Foreground" Value="White"/>
@@ -28,7 +27,6 @@
        TargetType="Button"
        BasedOn="{StaticResource SidebarButtonStyle}">
             <Setter Property="Background" Value= "Gray"/>
-            <!-- blue highlight -->
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
@@ -152,9 +150,99 @@
                 <TextBlock Text="Drop Course View" FontSize="32" Margin="20"/>
             </Grid>
 
-            <Grid x:Name="ProfilePanel" Visibility="Collapsed">
-                <TextBlock Text="Profile View" FontSize="32" Margin="20"/>
+            <Grid x:Name="ProfilePanel" Visibility="Collapsed" Margin="20">
+
+                <StackPanel>
+                    <TextBlock x:Name="ProfileNameText"
+                    FontSize="30"
+                    FontWeight="Bold"
+                    Foreground="DodgerBlue"
+                    Margin="0 0 0 25"/>
+                    <Border Background="#F7F9FC"
+                Padding="20"
+                CornerRadius="10"
+                BorderBrush="#D0D7E1"
+                BorderThickness="1">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="First Name:" 
+                           Grid.Row="0" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtFirstName" 
+                           Grid.Row="0" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Last Name:" 
+                           Grid.Row="1" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtLastName" 
+                           Grid.Row="1" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Email:" 
+                           Grid.Row="2" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtEmail" 
+                           Grid.Row="2" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Contact No:" 
+                           Grid.Row="3" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtContact" 
+                           Grid.Row="3" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Address:" 
+                           Grid.Row="4" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtAddress" 
+                           Grid.Row="4" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Birth Date:" 
+                           Grid.Row="5" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtBirthDate" 
+                           Grid.Row="5" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Major:" 
+                           Grid.Row="6" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtMajor" 
+                           Grid.Row="6" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Year:" 
+                           Grid.Row="7" Grid.Column="0" 
+                           FontWeight="Bold" FontSize="15" 
+                           Margin="0 8"/>
+                            <TextBlock x:Name="TxtYear" 
+                           Grid.Row="7" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
             </Grid>
+
 
         </Grid>
 

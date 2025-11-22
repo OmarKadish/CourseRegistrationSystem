@@ -27,7 +27,16 @@ namespace CourseRegistrationSystem
         {
             InitializeComponent();
             _currentUser = user;
+            TxtFirstName.Text = user.FirstName;
+            TxtLastName.Text = user.LastName;
+            TxtEmail.Text = user.Email;
+            TxtContact.Text = user.ContactNo;
+            TxtAddress.Text = user.Address;
+            TxtBirthDate.Text = user.BirthDate.ToString("yyyy-MM-dd");
+            TxtMajor.Text = user.Major;
+            TxtYear.Text = user.StudentYear.ToString();
             StudentNameText.Text = $"{user.FirstName} {user.LastName}";
+            ProfileNameText.Text = $"{user.StudentID}";
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)

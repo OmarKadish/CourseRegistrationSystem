@@ -11,6 +11,7 @@ namespace RegistrationEntityDAL
     public class UserData
     {
         public int UserID { set; get; }
+        public int StudentID { set; get; }
         public string LoginName { set; get; }
         public string Password { set; get; }
         public string Role { get; set; }
@@ -18,6 +19,11 @@ namespace RegistrationEntityDAL
         public string LastName { get; set; }
         public string Email { get; set; }
         public Boolean LoggedIn { set; get; }
+        public string ContactNo { get; set; }
+        public string Address { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Major { get; set; }
+        public int StudentYear { get; set; }
 
         public Boolean LogIn(string loginName, string passWord, string role)
         {

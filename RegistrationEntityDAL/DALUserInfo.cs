@@ -64,7 +64,7 @@ namespace RegistrationEntityDAL
                 switch (role)
                 {
                     case "Student":
-                        cmd.CommandText = @"SELECT StudentID, FirstName, LastName, Email, Password 
+                        cmd.CommandText = @"SELECT StudentID, FirstName, LastName, Email, Password, StudentID, BirthDate, Major, StudentYear, ContactNo,Address
                                     FROM Student
                                     WHERE Email = @Email AND Password = @Password";
                         break;
@@ -93,9 +93,19 @@ namespace RegistrationEntityDAL
                 {
                     user = new UserData
                     {
+                        UserID = Convert.ToInt32(reader["StudentID"]),
                         FirstName = reader["FirstName"].ToString(),
                         LastName = reader["LastName"].ToString(),
                         Email = reader["Email"].ToString(),
+                        ContactNo = reader["ContactNo"].ToString(),
+                        Address = reader["Address"].ToString(),
+                        BirthDate = reader["BirthDate"] == DBNull.Value
+                        ? DateTime.MinValue
+                        : Convert.ToDateTime(reader["BirthDate"]),
+                        Major = reader["Major"].ToString(),
+                        StudentYear = reader["StudentYear"] == DBNull.Value
+                        ? 0
+                        : Convert.ToInt32(reader["StudentYear"]),
                         Role = role,
                         LoggedIn = true
                     };
