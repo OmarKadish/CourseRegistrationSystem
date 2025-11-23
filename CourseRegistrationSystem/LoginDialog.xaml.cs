@@ -36,7 +36,6 @@ namespace CourseRegistrationSystem
                 MessageBox.Show("Please enter both email and password.");
                 return;
             }
-            MessageBox.Show($"Logging in as: {SelectedRole}");
             //CourseWindow courseWindow = new CourseWindow();
             //courseWindow.Show(); //I added these to test my window
             this.DialogResult = true;

@@ -93,6 +93,54 @@ namespace RegistrationEntityDAL
             }
             return list;
         }
+        public List<ScheduleData> GetStudentSchedule(int studentId, int termId)
+        {
+            List<ScheduleData> list = new List<ScheduleData>();
+
+            string connString = Properties.Settings.Default.DbContext;
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string query = @"
+        SELECT 
+            C.CourseCode,
+            C.CourseName,
+            I.FirstName + ' ' + I.LastName AS InstructorName,
+            S.Room,
+            FORMAT(S.StartTime, 'hh\\:mm') + ' - ' + FORMAT(S.EndTime, 'hh\\:mm') AS Time
+        FROM Enrollment E
+        JOIN Section S ON E.SectionID = S.SectionID
+        JOIN Course C ON S.CourseID = C.CourseID
+        JOIN Instructor I ON S.InstructorID = I.InstructorID
+        WHERE E.StudentID = @StudentID AND S.TermID = @TermID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+                    cmd.Parameters.AddWithValue("@TermID", termId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        list.Add(new ScheduleData
+                        {
+                            CourseCode = reader["CourseCode"].ToString(),
+                            CourseName = reader["CourseName"].ToString(),
+                            InstructorName = reader["InstructorName"].ToString(),
+                            Room = reader["Room"].ToString(),
+                            Days = "",  // You aren't storing Days in DB, leave blank
+                            Time = reader["Time"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return list;
+        }
+
     }
 }
 

@@ -45,8 +45,6 @@ namespace CourseRegistrationSystem
                         System.Windows.MessageBox.Show("Failed to load user profile.");
                         return;
                     }
-
-                    System.Windows.MessageBox.Show("You could be verified");
                     Window dashboard = null;
                     switch (role)
                     {

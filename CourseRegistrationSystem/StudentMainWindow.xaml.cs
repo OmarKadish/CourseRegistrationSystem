@@ -37,6 +37,7 @@ namespace CourseRegistrationSystem
             TxtYear.Text = user.StudentYear.ToString();
             StudentNameText.Text = $"{user.FirstName} {user.LastName}";
             ProfileNameText.Text = $"{user.StudentID}";
+            LoadTerms();
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
@@ -77,12 +78,45 @@ namespace CourseRegistrationSystem
             win.Owner = this;
             win.ShowDialog();
         }
+        private void LoadTerms()
+        {
+            var dal = new DALTermInfo();
+            var terms = dal.GetAllTerms();
+
+            foreach (var t in terms)
+                TermCombo.Items.Add(t.DisplayName);
+        }
+        private void LoadStudentSchedule(string selectedTermText)
+        {
+            ComboBoxItem item = TermCombo.SelectedItem as ComboBoxItem;
+            if (item == null || item.Tag == null) return;
+            int termId = Convert.ToInt32(item.Tag);
+
+            var dal = new DALCourseInfo();
+            var scheduleList = dal.GetStudentSchedule(_currentUser.UserID, termId);
+
+            ScheduleGrid.ItemsSource = scheduleList;
+        }
+
+        private void TermCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TermCombo.SelectedItem == null || TermCombo.SelectedIndex == 0)
+                return;
+
+            var selected = TermCombo.SelectedItem as ComboBoxItem;
+            if (selected != null)
+            {
+                string termName = selected.Content.ToString();
+                LoadStudentSchedule(termName);
+            }
+        }
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             {
 
             }
         }
+
     }
 }
 
