@@ -10,5 +10,7 @@ namespace RegistrationEntityDAL
     {
         public int CourseID { get; set; }
         public int CoursePrerequisiteID { get; set; }
+        public string PrereqCourseCode { get; set; }
+        public string PrereqCourseName { get; set; }
     }
 }

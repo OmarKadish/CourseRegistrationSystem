@@ -1,0 +1,44 @@
+﻿<Window x:Class="CourseRegistrationSystem.CourseAddEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseRegistrationSystem"
+        mc:Ignorable="d"
+        Title="CourseAddEditWindow" Height="420" Width="520" WindowStartupLocation="CenterOwner">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="0,0,0,8">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Label Content="Code:" Width="80"/>
+                <TextBox x:Name="TxtCourseCode" Width="200"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Label Content="Name:" Width="80"/>
+                <TextBox x:Name="TxtCourseName" Width="380"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Label Content="Credits:" Width="80"/>
+                <TextBox x:Name="TxtCredits" Width="60"/>
+            </StackPanel>
+        </StackPanel>
+
+        <GroupBox Header="Description" Grid.Row="1">
+            <TextBox x:Name="TxtDescription" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        </GroupBox>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <Button Content="Manage Prerequisites" Margin="0,0,8,0" Click="BtnManagePrereqs_Click"/>
+            <Button Content="Save" Width="90" Name="SaveBtn" Margin="0,0,8,0" Click="SaveBtn_Click"/>
+            <Button Content="Cancel" Width="90" Name="CancelBtn" Click="CancelBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

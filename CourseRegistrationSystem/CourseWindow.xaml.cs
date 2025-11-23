@@ -22,15 +22,17 @@ namespace CourseRegistrationSystem
     public partial class CourseWindow : Window
     {
         public ObservableCollection<CourseData> Courses { get; set; } = new ObservableCollection<CourseData>();
+        private UserData _currentUser;
 
-        public CourseWindow()
+        public CourseWindow(UserData user)
         {
             InitializeComponent();
+            _currentUser = user;
             GridCourses.ItemsSource = Courses;
             LoadCourseList();
         }
 
-        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
             LoadCourseList();
 
@@ -57,24 +59,62 @@ namespace CourseRegistrationSystem
 
         }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new CourseAddEditWindow();
+            if (win.ShowDialog() == true)
+            {
+                // if created, refresh
+                LoadCourseList();
+            }
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (GridCourses.SelectedItem is CourseData selected)
+            {
+                var win = new CourseAddEditWindow(selected.CourseID);
+                if (win.ShowDialog() == true)
+                {
+                    LoadCourseList();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a course to edit.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (GridCourses.SelectedItem is CourseData selected)
+            {
+                var res = MessageBox.Show($"Delete course {selected.CourseCode}? This will remove dependent sections/enrollments.", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (res == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        DALCourseInfo courseInfo = new DALCourseInfo();
+                        courseInfo.DeleteCourse(selected.CourseID);
+                        LoadCourseList();
+                        MessageBox.Show("Course deleted.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Delete failed: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a course to delete.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

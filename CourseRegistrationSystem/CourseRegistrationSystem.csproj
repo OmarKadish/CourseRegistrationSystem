@@ -179,6 +179,9 @@
     <Compile Include="AdminMainWindow.xaml.cs">
       <DependentUpon>AdminMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseAddEditWindow.xaml.cs">
+      <DependentUpon>CourseAddEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CourseWindow.xaml.cs">
       <DependentUpon>CourseWindow.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <DependentUpon>StudentMainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AdminMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseAddEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,10 +14,10 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,8">
-            <Button x:Name="BtnRefresh" Content="Refresh" Width="90" Margin="0,0,8,0" Click="BtnRefresh_Click"/>
-            <Button x:Name="BtnAdd" Content="Add Course" Width="100" Margin="0,0,8,0" Click="BtnAdd_Click"/>
-            <Button x:Name="BtnEdit" Content="Edit Selected" Width="110" Margin="0,0,8,0" Click="BtnEdit_Click"/>
-            <Button x:Name="BtnDelete" Content="Delete Selected" Width="120" Margin="0,0,8,0" Click="BtnDelete_Click"/>
+            <Button x:Name="RefreshBtn" Content="Refresh" Width="90" Margin="0,0,8,0" Click="RefreshBtn_Click"/>
+            <Button x:Name="AddBtn" Content="Add Course" Width="100" Margin="0,0,8,0" Click="AddBtn_Click"/>
+            <Button x:Name="EditBtn" Content="Edit Selected" Width="110" Margin="0,0,8,0" Click="EditBtn_Click"/>
+            <Button x:Name="DeleteBtn" Content="Delete Selected" Width="120" Margin="0,0,8,0" Click="DeleteBtn_Click"/>
             <TextBox x:Name="TxtSearch" Width="200" Margin="8,0,0,0" KeyUp="TxtSearch_KeyUp"/>
         </StackPanel>
 

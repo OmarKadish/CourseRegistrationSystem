@@ -204,7 +204,7 @@
                 Content="Open Course Window"
                 Style="{StaticResource SidebarButtonStyle}"
                 Width="250"
-                Click="OpenCourseWindow_Click"/>
+                />
 
                 </StackPanel>
             </Grid>

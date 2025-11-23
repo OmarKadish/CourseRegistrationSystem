@@ -67,14 +67,14 @@ namespace CourseRegistrationSystem
         private void BtnEnroll_Click(object sender, RoutedEventArgs e)
         {
 
-            var enrollWindow = new EnrollmentWindow(_currentUser);
+            var enrollWindow = new EnrollmentWindow();
             enrollWindow.Owner = this;
             enrollWindow.ShowDialog();
         }
         private void OpenCourseWindow_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            var win = new CourseWindow();  
+            var win = new CourseWindow(_currentUser);  
             win.Owner = this;
             win.ShowDialog();
         }
