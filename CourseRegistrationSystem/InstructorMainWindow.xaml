@@ -125,9 +125,60 @@
                 </StackPanel>
             </Grid>
             <Grid x:Name="ProfilePanel" Visibility="Collapsed" Margin="20">
-                <TextBlock Text="Profile Page (optional)"
-                           FontSize="28"/>
+
+                <StackPanel>
+                    <TextBlock x:Name="ProfileNameText"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   Foreground="DodgerBlue"
+                   Margin="0 0 0 25"/>
+                    <Border Background="#F7F9FC"
+                Padding="20"
+                CornerRadius="10"
+                BorderBrush="#D0D7E1"
+                BorderThickness="1">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="First Name:" Grid.Row="0" Grid.Column="0"
+                           FontWeight="Bold" FontSize="15" Margin="0 8"/>
+                            <TextBlock x:Name="TxtFirstName" Grid.Row="0" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Last Name:" Grid.Row="1" Grid.Column="0"
+                           FontWeight="Bold" FontSize="15" Margin="0 8"/>
+                            <TextBlock x:Name="TxtLastName" Grid.Row="1" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Email:" Grid.Row="2" Grid.Column="0"
+                           FontWeight="Bold" FontSize="15" Margin="0 8"/>
+                            <TextBlock x:Name="TxtEmail" Grid.Row="2" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Department:" Grid.Row="3" Grid.Column="0"
+                           FontWeight="Bold" FontSize="15" Margin="0 8"/>
+                            <TextBlock x:Name="TxtDepartment" Grid.Row="3" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+                            <TextBlock Text="Office Location:" Grid.Row="4" Grid.Column="0"
+                           FontWeight="Bold" FontSize="15" Margin="0 8"/>
+                            <TextBlock x:Name="TxtOffice" Grid.Row="4" Grid.Column="1"
+                           FontSize="15" Margin="0 8"/>
+
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
             </Grid>
+
+
 
         </Grid>
     </Grid>

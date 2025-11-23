@@ -24,6 +24,9 @@ namespace RegistrationEntityDAL
         public DateTime BirthDate { get; set; }
         public string Major { get; set; }
         public int StudentYear { get; set; }
+        public string Department { get; set; }
+        public string OfficeLocation { get; set; }
+
 
         public Boolean LogIn(string loginName, string passWord, string role)
         {

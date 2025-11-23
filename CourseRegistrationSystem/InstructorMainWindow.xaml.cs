@@ -25,8 +25,14 @@ namespace CourseRegistrationSystem
             InitializeComponent();
             _currentUser = user;
 
-            InstructorNameText.Text = $"{user.FirstName} {user.LastName}";
+            ProfileNameText.Text = $"{user.FirstName} {user.LastName}";
 
+            TxtFirstName.Text = user.FirstName;
+            TxtLastName.Text = user.LastName;
+            TxtEmail.Text = user.Email;
+            TxtDepartment.Text = user.Department;
+            TxtOffice.Text = user.OfficeLocation;
+            InstructorNameText.Text = $"{user.FirstName} {user.LastName}";
             LoadClasses();
         }
 
@@ -55,9 +61,6 @@ namespace CourseRegistrationSystem
 
         private void LoadClasses()
         {
-            // TODO: Fill later after your teammates finish Section CRUD
-            // var dal = new DALInstructor();
-            // ClassesGrid.ItemsSource = dal.GetInstructorClasses(_currentUser.UserID);
         }
     }
 }

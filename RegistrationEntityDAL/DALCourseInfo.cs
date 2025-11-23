@@ -102,11 +102,8 @@ namespace RegistrationEntityDAL
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-
                 string query = @"
-        SELECT 
-            C.CourseCode,
-            C.CourseName,
+        SELECT  C.CourseCode, C.CourseName,
             I.FirstName + ' ' + I.LastName AS InstructorName,
             S.Room,
             FORMAT(S.StartTime, 'hh\\:mm') + ' - ' + FORMAT(S.EndTime, 'hh\\:mm') AS Time
@@ -131,7 +128,7 @@ namespace RegistrationEntityDAL
                             CourseName = reader["CourseName"].ToString(),
                             InstructorName = reader["InstructorName"].ToString(),
                             Room = reader["Room"].ToString(),
-                            Days = "",  // You aren't storing Days in DB, leave blank
+                            Days = "",
                             Time = reader["Time"].ToString()
                         });
                     }

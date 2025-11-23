@@ -70,7 +70,7 @@ namespace RegistrationEntityDAL
                         break;
 
                     case "Instructor":
-                        cmd.CommandText = @"SELECT InstructorID, FirstName, LastName, Email, Password 
+                        cmd.CommandText = @"SELECT InstructorID, FirstName, LastName, Email, Password, Department, OfficeLocation 
                                     FROM Instructor
                                     WHERE Email = @Email AND Password = @Password";
                         break;
@@ -91,25 +91,41 @@ namespace RegistrationEntityDAL
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    user = new UserData
+                    user = new UserData();
+
+                    if (role == "Student")
                     {
-                        UserID = Convert.ToInt32(reader["StudentID"]),
-                        FirstName = reader["FirstName"].ToString(),
-                        LastName = reader["LastName"].ToString(),
-                        Email = reader["Email"].ToString(),
-                        ContactNo = reader["ContactNo"].ToString(),
-                        Address = reader["Address"].ToString(),
-                        BirthDate = reader["BirthDate"] == DBNull.Value
-                        ? DateTime.MinValue
-                        : Convert.ToDateTime(reader["BirthDate"]),
-                        Major = reader["Major"].ToString(),
-                        StudentYear = reader["StudentYear"] == DBNull.Value
-                        ? 0
-                        : Convert.ToInt32(reader["StudentYear"]),
-                        Role = role,
-                        LoggedIn = true
-                    };
+                        user.UserID = Convert.ToInt32(reader["StudentID"]);
+                        user.FirstName = reader["FirstName"].ToString();
+                        user.LastName = reader["LastName"].ToString();
+                        user.Email = reader["Email"].ToString();
+                        user.ContactNo = reader["ContactNo"].ToString();
+                        user.Address = reader["Address"].ToString();
+                        user.BirthDate = reader["BirthDate"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["BirthDate"]);
+                        user.Major = reader["Major"].ToString();
+                        user.StudentYear = reader["StudentYear"] == DBNull.Value ? 0 : Convert.ToInt32(reader["StudentYear"]);
+                    }
+                    else if (role == "Instructor")
+                    {
+                        user.UserID = Convert.ToInt32(reader["InstructorID"]);
+                        user.FirstName = reader["FirstName"].ToString();
+                        user.LastName = reader["LastName"].ToString();
+                        user.Email = reader["Email"].ToString();
+                        user.Department = reader["Department"].ToString();
+                        user.OfficeLocation = reader["OfficeLocation"].ToString();
+                    }
+                    else if (role == "Office Registrar")
+                    {
+                        user.UserID = Convert.ToInt32(reader["EmployeeID"]);
+                        user.FirstName = reader["FirstName"].ToString();
+                        user.LastName = ""; 
+                        user.Email = reader["Email"].ToString();
+                    }
+
+                    user.Role = role;
+                    user.LoggedIn = true;
                 }
+
                 reader.Close();
             }
 
