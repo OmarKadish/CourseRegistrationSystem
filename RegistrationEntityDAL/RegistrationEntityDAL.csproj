@@ -180,6 +180,7 @@
   <ItemGroup>
     <Compile Include="CourseData.cs" />
     <Compile Include="DALCourseInfo.cs" />
+    <Compile Include="DALEnrollment.cs" />
     <Compile Include="DALTermInfo.cs" />
     <Compile Include="DALUserInfo.cs" />
     <Compile Include="PrerequisiteData.cs" />
