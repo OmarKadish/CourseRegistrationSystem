@@ -27,9 +27,20 @@
                 <DataGridTextColumn Header="Code" Binding="{Binding CourseCode}" Width="120"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding CourseName}" Width="*"/>
                 <DataGridTextColumn Header="Credits" Binding="{Binding Credits}" Width="80"/>
-                <DataGridTextColumn Header="Prerequisites" Width="200">
-
-                </DataGridTextColumn>
+                <DataGridTemplateColumn  Header="Prerequisites" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding Prerequisites}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <!-- Display each prerequisite as a text block -->
+                                        <TextBlock Text="{Binding PrereqCourseCode}" Margin="0,0,5,0" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

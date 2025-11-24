@@ -39,7 +39,7 @@ namespace RegistrationEntityDAL.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\RegistrationS" +
-            "ystemDB.mdf;Integrated Security=True;Connect Timeout=30")]
+            "ystemDB.mdf;Integrated Security=True;Connect Timeout=60")]
         public string DbContext {
             get {
                 return ((string)(this["DbContext"]));

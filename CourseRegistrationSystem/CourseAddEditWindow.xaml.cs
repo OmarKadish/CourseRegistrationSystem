@@ -95,9 +95,9 @@ namespace CourseRegistrationSystem
                 else
                 {
                     var isAdded = _courseInfo.AddCourse(_course.CourseCode, _course.CourseName, _course.Description, _course.Credits);
-                    if (isAdded)
+                    if (isAdded > 0)
                     {
-                        MessageBox.Show("Course created.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show($"{isAdded} Course created.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
 

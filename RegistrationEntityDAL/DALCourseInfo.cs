@@ -87,21 +87,34 @@ namespace RegistrationEntityDAL
             return res;
         }
 
-        public bool AddCourse(string courseCode, string courseName, string description, int credits)
+        public int AddCourse(string courseCode, string courseName, string description, int credits)
         {
             using (SqlConnection conn = new SqlConnection(Properties.Settings.Default.DbContext))
             {
-                conn.Open();
-                string query = @"INSERT INTO Course (CourseCode, CourseName, Description, Credits) 
+                try
+                {
+                    conn.Open();
+                    string query = @"INSERT INTO Course (CourseCode, CourseName, Description, Credits) 
                            VALUES (@CourseCode, @CourseName, @Description, @Credits)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@CourseCode", courseCode);
-                cmd.Parameters.AddWithValue("@CourseName", courseName);
-                cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Credits", credits);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@CourseCode", courseCode);
+                    cmd.Parameters.AddWithValue("@CourseName", courseName);
+                    cmd.Parameters.AddWithValue("@Description", description);
+                    cmd.Parameters.AddWithValue("@Credits", credits);
 
-                //conn.Open();
-                return cmd.ExecuteNonQuery() > 0;
+                    //conn.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                    return 0;
+                }
+                finally
+                {
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+                }
             }
         }
 

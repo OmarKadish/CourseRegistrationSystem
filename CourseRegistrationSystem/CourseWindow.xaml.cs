@@ -49,6 +49,7 @@ namespace CourseRegistrationSystem
                 foreach (var course in list)
                 {
                     Courses.Add(course);
+
                 }
                 TxtStatus.Text = $"Loaded {Courses.Count} courses.";
             }
@@ -61,7 +62,19 @@ namespace CourseRegistrationSystem
 
         private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
         {
-            throw new NotImplementedException();
+            var keyword = TxtSearch.Text?.Trim().ToLower() ?? "";
+            if (string.IsNullOrEmpty(keyword))
+            {
+                GridCourses.ItemsSource = Courses;
+            }
+            else
+            {
+                var filtered = new ObservableCollection<CourseData>(Courses.Where(c =>
+                    (!string.IsNullOrEmpty(c.CourseCode) && c.CourseCode.ToLower().Contains(keyword))
+                    || (!string.IsNullOrEmpty(c.CourseName) && c.CourseName.ToLower().Contains(keyword))
+                ));
+                GridCourses.ItemsSource = filtered;
+            }
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
