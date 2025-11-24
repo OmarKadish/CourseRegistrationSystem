@@ -190,24 +190,37 @@
 
                 </StackPanel>
             </Grid>
+            <DataGrid x:Name="BrowseCoursesGrid"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          HeadersVisibility="Column"
+          RowHeight="35"
+          ColumnWidth="*"
+          Background="WhiteSmoke"
+          BorderBrush="Gray"
+          BorderThickness="1">
 
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Course Code" Binding="{Binding CourseCode}" Width="120"/>
+                    <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" Width="240"/>
+                    <DataGridTextColumn Header="Credits" Binding="{Binding Credits}" Width="80"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
 
+                    <!-- Add to Cart Button -->
+                    <DataGridTemplateColumn Header="Action" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Add to Cart"
+                            Padding="10,2"
+                            Tag="{Binding CourseID}"
+                            Click="AddToCart_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
+                </DataGrid.Columns>
 
-
-
-
-
-            <Grid x:Name="BrowsePanel" Visibility="Collapsed" Margin="20">
-                <StackPanel>
-                    <Button x:Name="BtnOpenCourseWindow"
-                Content="Open Course Window"
-                Style="{StaticResource SidebarButtonStyle}"
-                Width="250"
-                />
-
-                </StackPanel>
-            </Grid>
+            </DataGrid>
 
             <Grid x:Name="CartPanel" Visibility="Collapsed">
                 <TextBlock Text="Cart View" FontSize="32" Margin="20"/>

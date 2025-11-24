@@ -37,6 +37,7 @@ namespace CourseRegistrationSystem
             TxtYear.Text = user.StudentYear.ToString();
             StudentNameText.Text = $"{user.FirstName} {user.LastName}";
             ProfileNameText.Text = $"{user.StudentID}";
+            LoadCourses();
             LoadTerms();
         }
 
@@ -49,7 +50,7 @@ namespace CourseRegistrationSystem
             Button clicked = sender as Button;
 
             if (clicked == BtnSchedule) ShowPanel(SchedulePanel);
-            else if (clicked == BtnBrowse) ShowPanel(BrowsePanel);
+            else if (clicked == BtnBrowse) ShowPanel(BrowseCoursesGrid);
             else if (clicked == BtnCart) ShowPanel(CartPanel);
 
             else if (clicked == BtnDrop) ShowPanel(DropPanel);
@@ -58,7 +59,7 @@ namespace CourseRegistrationSystem
         private void ShowPanel(UIElement panelToShow)
         {
             SchedulePanel.Visibility = Visibility.Collapsed;
-            BrowsePanel.Visibility = Visibility.Collapsed;
+            BrowseCoursesGrid.Visibility = Visibility.Collapsed;
             CartPanel.Visibility = Visibility.Collapsed;
             DropPanel.Visibility = Visibility.Collapsed;
             ProfilePanel.Visibility = Visibility.Collapsed;
@@ -71,18 +72,10 @@ namespace CourseRegistrationSystem
             enrollWindow.Owner = this;
             enrollWindow.ShowDialog();
         }
-        private void OpenCourseWindow_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = sender as Button;
-            var win = new CourseWindow(_currentUser);  
-            win.Owner = this;
-            win.ShowDialog();
-        }
         private void LoadTerms()
         {
             var dal = new DALTermInfo();
             var terms = dal.GetAllTerms();
-
             foreach (var t in terms)
                 TermCombo.Items.Add(t.DisplayName);
         }
@@ -109,6 +102,12 @@ namespace CourseRegistrationSystem
                 string termName = selected.Content.ToString();
                 LoadStudentSchedule(termName);
             }
+        }
+        private void LoadCourses()
+        {
+            var dal = new DALCourseInfo();
+            var courses = dal.GetAllCourses();
+            BrowseCoursesGrid.ItemsSource = courses;
         }
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
