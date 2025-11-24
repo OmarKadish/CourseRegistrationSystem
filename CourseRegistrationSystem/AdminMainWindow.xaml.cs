@@ -20,10 +20,18 @@ namespace CourseRegistrationSystem
     /// </summary>
     public partial class AdminMainWindow : Window
     {
-        
+        private UserData _currentUser;
+
         public AdminMainWindow(UserData user)
         {
             InitializeComponent();
+            _currentUser = user;
+        }
+        private void BtnOpenCourseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new CourseWindow(_currentUser);
+            win.Owner = this;
+            win.ShowDialog();
         }
     }
 }

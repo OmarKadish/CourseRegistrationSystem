@@ -58,8 +58,8 @@ namespace CourseRegistrationSystem
 
                         
                         case "Office Registrar":
-                            //dashboard = new AdminMainWindow(user);
-                            dashboard = new CourseWindow(user);
+                            dashboard = new AdminMainWindow(user);
+                            
                             break;
 
                         default:
