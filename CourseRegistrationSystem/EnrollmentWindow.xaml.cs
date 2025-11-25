@@ -77,6 +77,7 @@ namespace CourseRegistrationSystem
             var items = dal.GetCartItems(studentId);
             CartGrid.ItemsSource = items;
         }
+        //not working
         private void EnrollButton_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -91,7 +92,6 @@ namespace CourseRegistrationSystem
             int studentId = _currentUser.UserID;
 
             string result = _dalEnrollment.EnrollStudent(studentId, sectionId);
-
             if (result == "OK")
             {
                 MessageBox.Show("Enrolled successfully!");

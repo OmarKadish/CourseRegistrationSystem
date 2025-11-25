@@ -68,43 +68,50 @@
         <Grid Grid.Column="1" Background="White" Margin="10">
             <Grid x:Name="ClassesPanel" Visibility="Collapsed" Margin="20">
                 <StackPanel>
-                    <TextBlock Text="My Classes"
-                               FontSize="28"
-                               FontWeight="Bold"
-                               Margin="0 0 0 15"/>
 
                     <DataGrid x:Name="ClassesGrid"
-                              AutoGenerateColumns="False"
-                              IsReadOnly="True"
-                              HeadersVisibility="Column"
-                              RowHeight="35"
-                              ColumnWidth="*"
-                              Background="WhiteSmoke"
-                              BorderBrush="Gray"
-                              BorderThickness="1">
+                        AutoGenerateColumns="False"
+                     IsReadOnly="True"
+                        HeadersVisibility="Column"
+                     RowHeight="40"
+                         ColumnWidth="*"
+                        Background="White"
+                     BorderBrush="Transparent"
+                         Margin="0 10 0 0"
+                        AlternatingRowBackground="#F3F7FA"
+                    GridLinesVisibility="None"
+                        RowHeaderWidth="0"
+                        BorderThickness="0"
+                    >
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="#2A6FDB"/>
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.Resources>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Course Code" Binding="{Binding CourseCode}" Width="150"/>
-                            <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" Width="250"/>
+                            <DataGridTextColumn Header="Course Code" Binding="{Binding CourseCode}" Width="130"/>
+                            <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" Width="300"/>
                             <DataGridTextColumn Header="Term" Binding="{Binding TermName}" Width="150"/>
                             <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="150"/>
                         </DataGrid.Columns>
 
                     </DataGrid>
+
                 </StackPanel>
             </Grid>
             <Grid x:Name="RosterPanel" Visibility="Collapsed" Margin="20">
                 <StackPanel>
-                    <TextBlock Text="Class Roster"
-                               FontSize="28"
-                               FontWeight="Bold"
-                               Margin="0 0 0 15"/>
-
                     <ComboBox x:Name="ClassSelector"
-                              Width="300"
-                              Margin="0 0 0 20">
-                        <ComboBoxItem Content="— Select a class —" IsEnabled="False" IsSelected="True"/>
-                    </ComboBox>
+                    Width="300"
+                    Margin="0 0 0 20"
+                    SelectionChanged="ClassSelector_SelectionChanged"
+                    DisplayMemberPath="DisplayName"
+                    SelectedValuePath="SectionID"/>
+
+
 
                     <DataGrid x:Name="RosterGrid"
                               AutoGenerateColumns="False"

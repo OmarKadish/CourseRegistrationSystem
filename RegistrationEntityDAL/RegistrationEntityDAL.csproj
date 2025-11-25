@@ -181,9 +181,11 @@
     <Compile Include="CourseData.cs" />
     <Compile Include="DALCourseInfo.cs" />
     <Compile Include="DALEnrollment.cs" />
+    <Compile Include="DALInstructorInfo.cs" />
     <Compile Include="DALTermInfo.cs" />
     <Compile Include="DALUserInfo.cs" />
     <Compile Include="EnrollmentScheduleItem.cs" />
+    <Compile Include="InstructorClassItem.cs" />
     <Compile Include="PrerequisiteData.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
