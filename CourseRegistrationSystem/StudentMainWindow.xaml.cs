@@ -49,14 +49,23 @@ namespace CourseRegistrationSystem
         {
             Button clicked = sender as Button;
 
-            if (clicked == BtnSchedule) ShowPanel(SchedulePanel);
+            if (clicked == BtnSchedule)
+            {
+                ShowPanel(SchedulePanel);
+                LoadTerms();
+
+            }
             else if (clicked == BtnBrowse) ShowPanel(BrowseCoursesGrid);
             else if (clicked == BtnCart)
             {
                 ShowPanel(CartPanel);
                 LoadCart();
             }
-            else if (clicked == BtnDrop) ShowPanel(DropPanel);
+            else if (clicked == BtnDrop) {
+                ShowPanel(DropPanel);
+                LoadDropCourses();
+            }
+            
             else if (clicked == BtnProfile) ShowPanel(ProfilePanel);
         }
         private void ShowPanel(UIElement panelToShow)
@@ -77,18 +86,31 @@ namespace CourseRegistrationSystem
         }
         private void LoadTerms()
         {
+           
+
+            TermCombo.Items.Clear();
+
             var dal = new DALTermInfo();
             var terms = dal.GetAllTerms();
+
             foreach (var t in terms)
-                TermCombo.Items.Add(t.DisplayName);
+            {
+                ComboBoxItem cb = new ComboBoxItem();
+                cb.Content = t.DisplayName; // ex: "Fall 2024"
+                cb.Tag = t.TermID;          // IMPORTANT: stores actual ID
+
+                TermCombo.Items.Add(cb);
+            }
         }
-        private void LoadStudentSchedule(string selectedTermText)
+
+        private void LoadStudentSchedule()
         {
             ComboBoxItem item = TermCombo.SelectedItem as ComboBoxItem;
             if (item == null || item.Tag == null) return;
+
             int termId = Convert.ToInt32(item.Tag);
 
-            var dal = new DALCourseInfo();
+            var dal = new DALEnrollment();
             var scheduleList = dal.GetStudentSchedule(_currentUser.UserID, termId);
 
             ScheduleGrid.ItemsSource = scheduleList;
@@ -96,16 +118,10 @@ namespace CourseRegistrationSystem
 
         private void TermCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TermCombo.SelectedItem == null || TermCombo.SelectedIndex == 0)
-                return;
-
-            var selected = TermCombo.SelectedItem as ComboBoxItem;
-            if (selected != null)
-            {
-                string termName = selected.Content.ToString();
-                LoadStudentSchedule(termName);
-            }
+            if (TermCombo.SelectedIndex > -1)
+                LoadStudentSchedule();
         }
+
         private void LoadCourses()
         {
             var dal = new DALCourseInfo();
@@ -149,7 +165,38 @@ namespace CourseRegistrationSystem
             var dal = new DALCourseInfo();
             dal.RemoveFromCart(cartId);
 
-            LoadCart(); // refresh
+            LoadCart();
+        }
+
+        private void LoadDropCourses()
+        {
+            ComboBoxItem item = TermCombo.SelectedItem as ComboBoxItem;
+            if (item == null || item.Tag == null) return;
+
+            int termId = Convert.ToInt32(item.Tag);
+
+            var dal = new DALEnrollment();
+            var list = dal.GetStudentSchedule(_currentUser.UserID, termId);
+
+            DropGrid.ItemsSource = list;
+        }
+
+        private void DropCourse_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            int sectionId = Convert.ToInt32(btn.Tag);
+            int studentId = _currentUser.UserID;
+
+            var dal = new DALEnrollment();
+            bool result = dal.DropCourse(studentId, sectionId);
+
+            if (result)
+                MessageBox.Show("Course dropped successfully!");
+            else
+                MessageBox.Show("Failed to drop the course.");
+
+            LoadStudentSchedule();
+            LoadDropCourses();
         }
 
     }

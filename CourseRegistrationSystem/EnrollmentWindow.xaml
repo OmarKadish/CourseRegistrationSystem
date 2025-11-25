@@ -139,7 +139,8 @@
                                         Foreground="White"
                                         BorderThickness="0"
                                         Cursor="Hand"
-                                        Click="EnrollButton_Click"/>
+                                        Click="EnrollButton_Click"
+                                        Tag="{Binding SectionId}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -183,10 +184,7 @@
             </DataGrid>
 
         </GroupBox>
-
-
-
-        <!-- ░░░ SHOW ENROLLMENTS BUTTON ░░░ -->
+        <!--SHOW ENROLLMENTS BUTTON-->
         <Button Name="enrollmentListButton"
                 Grid.Row="4"
                 Content="Show Enrollment List"

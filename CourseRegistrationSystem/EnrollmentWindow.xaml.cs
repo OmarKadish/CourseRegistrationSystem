@@ -73,38 +73,65 @@ namespace CourseRegistrationSystem
         private void LoadCartItems()
         {
             var dal = new DALCourseInfo();
-            int studentId = _currentUser.UserID; 
+            int studentId = _currentUser.UserID;
             var items = dal.GetCartItems(studentId);
             CartGrid.ItemsSource = items;
         }
         private void EnrollButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.DataContext is CourseSearchResult selectedCourse)
-            {
-                MessageBox.Show($"Enrollment logic pending for {selectedCourse.CourseCode}.", "Enroll", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-        private void EnrollFromCart_Click(object sender, RoutedEventArgs e)
-        {
             Button btn = sender as Button;
+
+            if (btn.Tag == null)
+            {
+                MessageBox.Show("Invalid section.");
+                return;
+            }
+
             int sectionId = Convert.ToInt32(btn.Tag);
             int studentId = _currentUser.UserID;
 
-            try
+            string result = _dalEnrollment.EnrollStudent(studentId, sectionId);
+
+            if (result == "OK")
             {
-                _dalEnrollment.EnrollStudent(studentId, sectionId);
-
-                MessageBox.Show("Successfully enrolled!", "Success");
-
-                LoadCartItems();
-                var items = _dalEnrollment.GetEnrollmentList(studentId);
-                enrollmentListGrid.ItemsSource = items;
+                MessageBox.Show("Enrolled successfully!");
+                LoadCartItems();  
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Enrollment failed: " + ex.Message);
+                MessageBox.Show(result);
             }
         }
+
+        private void EnrollFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+
+            if (btn.Tag == null)
+            {
+                MessageBox.Show("Invalid section.");
+                return;
+            }
+
+            int sectionId = Convert.ToInt32(btn.Tag);
+            MessageBox.Show("Enrolling section: " + sectionId);
+            int studentId = _currentUser.UserID;
+
+            string result = _dalEnrollment.EnrollStudent(studentId, sectionId);
+
+            if (result == "OK")
+            {
+                MessageBox.Show("Enrolled successfully!");
+                LoadCartItems();   
+            }
+            else
+            {
+                MessageBox.Show(result);  
+            }
+        }
+
+
+
 
         private void enrollmentListButton_Click(object sender, RoutedEventArgs e)
         {

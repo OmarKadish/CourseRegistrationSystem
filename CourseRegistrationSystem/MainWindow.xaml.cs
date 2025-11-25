@@ -1,4 +1,5 @@
-﻿using RegistrationEntityDAL;
+﻿using Microsoft.IdentityModel.Logging;
+using RegistrationEntityDAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace CourseRegistrationSystem
 {
@@ -31,6 +33,7 @@ namespace CourseRegistrationSystem
             dlg.Owner = this;
             dlg.ShowDialog();
             DALUserInfo dal = new DALUserInfo();
+            
             UserData user = dal.FetchUser(dlg.Email, dlg.Password, dlg.SelectedRole);
             if (dlg.DialogResult == true)
             {
@@ -42,7 +45,7 @@ namespace CourseRegistrationSystem
                 {
                     if (user == null)
                     {
-                        System.Windows.MessageBox.Show("Failed to load user profile.");
+                        System.Windows.MessageBox.Show("User not Found.");
                         return;
                     }
                     Window dashboard = null;
@@ -69,6 +72,10 @@ namespace CourseRegistrationSystem
                     this.Hide();
                     dashboard.ShowDialog();
                     this.Show();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Incorrect email or password. Please try again.");
                 }
             }
             else

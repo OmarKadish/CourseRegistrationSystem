@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace RegistrationEntityDAL
 {
@@ -252,55 +253,11 @@ namespace RegistrationEntityDAL
             }
             return list;
         }
-        public List<ScheduleData> GetStudentSchedule(int studentId, int termId)
-        {
-            List<ScheduleData> list = new List<ScheduleData>();
 
-            string connString = Properties.Settings.Default.DbContext;
-
-            using (SqlConnection conn = new SqlConnection(connString))
-            {
-                conn.Open();
-                string query = @"
-        SELECT  C.CourseCode, C.CourseName,
-            I.FirstName + ' ' + I.LastName AS InstructorName,
-            S.Room,
-            FORMAT(S.StartTime, 'hh\\:mm') + ' - ' + FORMAT(S.EndTime, 'hh\\:mm') AS Time
-        FROM Enrollment E
-        JOIN Section S ON E.SectionID = S.SectionID
-        JOIN Course C ON S.CourseID = C.CourseID
-        JOIN Instructor I ON S.InstructorID = I.InstructorID
-        WHERE E.StudentID = @StudentID AND S.TermID = @TermID";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@StudentID", studentId);
-                    cmd.Parameters.AddWithValue("@TermID", termId);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        list.Add(new ScheduleData
-                        {
-                            CourseCode = reader["CourseCode"].ToString(),
-                            CourseName = reader["CourseName"].ToString(),
-                            InstructorName = reader["InstructorName"].ToString(),
-                            Room = reader["Room"].ToString(),
-                            Days = "",
-                            Time = reader["Time"].ToString()
-                        });
-                    }
-                }
-            }
-
-            return list;
-        }
 
         public bool AddToCart(int studentId, int courseId)
         {
             string connString = Properties.Settings.Default.DbContext;
-
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
@@ -309,28 +266,19 @@ namespace RegistrationEntityDAL
             INSERT INTO Cart (StudentID, SectionID)
             SELECT @StudentID, S.SectionID
             FROM Section S
-            WHERE S.CourseID = @CourseID
-                AND S.Capacity > S.CurrentEnrollment;";
+            WHERE S.CourseID = @CourseID;
+        ";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@StudentID", studentId);
                     cmd.Parameters.AddWithValue("@CourseID", courseId);
 
-                    try
-                    {
-                        return cmd.ExecuteNonQuery() > 0;
-                    }
-                    catch (SqlException ex)
-                    {
-                        if (ex.Number == 2627)
-                            return false;
-
-                        throw;
-                    }
+                    return cmd.ExecuteNonQuery() > 0;
                 }
             }
         }
+
         public List<CartItemData> GetCartItems(int studentId)
         {
             List<CartItemData> list = new List<CartItemData>();
@@ -341,20 +289,21 @@ namespace RegistrationEntityDAL
                 conn.Open();
 
                 string query = @"
-        SELECT 
-            C.CourseCode,
-            C.CourseName,
-            C.Credits,
-            I.FirstName + ' ' + I.LastName AS InstructorName,
-            S.Room,
-            T.TermName,
-            Cart.CartID
-        FROM Cart
-        JOIN Section S ON Cart.SectionID = S.SectionID
-        JOIN Course C ON S.CourseID = C.CourseID
-        JOIN Instructor I ON S.InstructorID = I.InstructorID
-        JOIN Term T ON S.TermID = T.TermID
-        WHERE Cart.StudentID = @StudentID";
+SELECT 
+    C.CourseCode,
+    C.CourseName,
+    C.Credits,
+    I.FirstName + ' ' + I.LastName AS InstructorName,
+    S.Room,
+    T.TermName,
+    Cart.CartID,
+    Cart.SectionID       
+FROM Cart
+JOIN Section S ON Cart.SectionID = S.SectionID
+JOIN Course C ON S.CourseID = C.CourseID
+JOIN Instructor I ON S.InstructorID = I.InstructorID
+JOIN Term T ON S.TermID = T.TermID
+WHERE Cart.StudentID = @StudentID";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -371,7 +320,9 @@ namespace RegistrationEntityDAL
                             Credits = Convert.ToInt32(reader["Credits"]),
                             InstructorName = reader["InstructorName"].ToString(),
                             Room = reader["Room"].ToString(),
-                            TermName = reader["TermName"].ToString()
+                            TermName = reader["TermName"].ToString(),
+
+                            SectionID = Convert.ToInt32(reader["SectionID"])   // 🔥 ADD THIS
                         });
                     }
                 }
@@ -379,6 +330,7 @@ namespace RegistrationEntityDAL
 
             return list;
         }
+
         public void RemoveFromCart(int cartId)
         {
             string connString = Properties.Settings.Default.DbContext;
@@ -395,6 +347,22 @@ namespace RegistrationEntityDAL
                 }
             }
         }
+        public void RemoveFromCartBySection(int studentId, int sectionId)
+        {
+            using (SqlConnection conn = new SqlConnection(Properties.Settings.Default.DbContext))
+            {
+                conn.Open();
+                string query = "DELETE FROM Cart WHERE StudentID = @StudentID AND SectionID = @SectionID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+                    cmd.Parameters.AddWithValue("@SectionID", sectionId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
 
     }

@@ -36,5 +36,6 @@ namespace RegistrationEntityDAL
         public string InstructorName { get; set; }
         public string Room { get; set; }
         public string TermName { get; set; }
+        public int SectionID { get; set; }
     }
 }

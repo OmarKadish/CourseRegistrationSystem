@@ -207,16 +207,27 @@
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
 
                     <!-- Add to Cart Button -->
-                    <DataGridTemplateColumn Header="Action" Width="120">
+                    <DataGridTemplateColumn Header="Action" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Add to Cart"
-                            Padding="10,2"
-                            Tag="{Binding CourseID}"
-                            Click="AddToCart_Click"/>
+                                <Button Tag="{Binding CourseID}"
+                                Padding="8,3"
+                                Margin="5"
+                                Background="#2ECC71"
+                                Foreground="White"
+                                 BorderThickness="0"
+                                Cursor="Hand"
+                                Click="AddToCart_Click">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Add" FontWeight="Bold"/>
+                                    </StackPanel>
+
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
 
                 </DataGrid.Columns>
 
@@ -276,8 +287,42 @@
             </Grid>
 
             <Grid x:Name="DropPanel" Visibility="Collapsed">
-                <TextBlock Text="Drop Course View" FontSize="32" Margin="20"/>
+                <StackPanel Margin="20">
+                    <TextBlock Text="Drop Courses" 
+                   FontSize="32" FontWeight="Bold" 
+                   Margin="0 0 0 20" />
+
+                    <DataGrid x:Name="DropGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  RowHeight="40">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Course" Binding="{Binding ClassLabel}" Width="300"/>
+                            <DataGridTextColumn Header="Instructor" Binding="{Binding InstructorName}" Width="200"/>
+                            <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="80"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+
+                            <!-- Drop Button -->
+                            <DataGridTemplateColumn Header="Action" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Drop"
+                                    Tag="{Binding SectionID}"
+                                    Background="#E74C3C"
+                                    Foreground="White"
+                                    Padding="6"
+                                    Click="DropCourse_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
             </Grid>
+
 
             <Grid x:Name="ProfilePanel" Visibility="Collapsed" Margin="20">
 
