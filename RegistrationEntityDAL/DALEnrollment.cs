@@ -106,6 +106,77 @@ ORDER BY c.CourseCode, t.TermYear DESC";
             }
             return results;
         }
+        public IList<EnrollmentListItem> GetEnrollmentList(int studentId)
+        {
+            var list = new List<EnrollmentListItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string query = @"
+            SELECT 
+                C.CourseCode,
+                C.CourseName,
+                I.FirstName + ' ' + I.LastName AS InstructorName,
+                S.Room,
+                E.Status
+            FROM Enrollment E
+            JOIN Section S ON E.SectionID = S.SectionID
+            JOIN Course C ON S.CourseID = C.CourseID
+            JOIN Instructor I ON S.InstructorID = I.InstructorID
+            WHERE E.StudentID = @StudentID
+            ORDER BY C.CourseCode";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@StudentID", studentId);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                list.Add(new EnrollmentListItem
+                                {
+                                    CourseCode = reader["CourseCode"].ToString(),
+                                    CourseName = reader["CourseName"].ToString(),
+                                    InstructorName = reader["InstructorName"].ToString(),
+                                    Room = reader["Room"].ToString(),
+                                    Status = reader["Status"].ToString()
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to load enrollment list: " + ex.Message);
+                }
+            }
+
+            return list;
+        }
+        public void EnrollStudent(int studentId, int sectionId)
+        {
+            using (SqlConnection conn = new SqlConnection(_connString))
+            {
+                conn.Open();
+
+                string query = @"INSERT INTO Enrollment (StudentID, SectionID, Status)
+                         VALUES (@StudentID, @SectionID, 'Enrolled')";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+                    cmd.Parameters.AddWithValue("@SectionID", sectionId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
     }
 
     public class TermInfo
@@ -128,5 +199,13 @@ ORDER BY c.CourseCode, t.TermYear DESC";
         public int Capacity { get; set; }
         public int CurrentEnrollment { get; set; }
         public int SeatsRemaining { get; set; }
+    }
+    public class EnrollmentListItem
+    {
+        public string CourseCode { get; set; }
+        public string CourseName { get; set; }
+        public string InstructorName { get; set; }
+        public string Room { get; set; }
+        public string Status { get; set; }
     }
 }

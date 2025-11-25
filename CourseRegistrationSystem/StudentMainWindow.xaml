@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CourseRegistrationSystem"
         mc:Ignorable="d"
         Title="Student Dashboard"
-        Height="1080" Width="1920"
+        Height="750" Width="1200"
         WindowStartupLocation="CenterScreen">
 
 
@@ -15,7 +15,7 @@
             <Setter Property="Background" Value="DodgerBlue"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Height" Value="45"/>
+            <Setter Property="Height" Value="35"/>
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -222,9 +222,54 @@
 
             </DataGrid>
 
-            <Grid x:Name="CartPanel" Visibility="Collapsed">
-                <TextBlock Text="Cart View" FontSize="32" Margin="20"/>
+            <Grid x:Name="CartPanel" Visibility="Collapsed" Margin="20">
+
+                <StackPanel>
+
+                    <TextBlock Text="My Cart"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   Foreground="DodgerBlue"
+                   Margin="0 0 0 15"/>
+
+                    <DataGrid x:Name="CartGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  RowHeight="35"
+                  ColumnWidth="*"
+                  Background="WhiteSmoke"
+                  BorderBrush="Gray"
+                  BorderThickness="1">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Course Code" Binding="{Binding CourseCode}" Width="150"/>
+                            <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" Width="250"/>
+                            <DataGridTextColumn Header="Credits" Binding="{Binding Credits}" Width="80"/>
+                            <DataGridTextColumn Header="Instructor" Binding="{Binding InstructorName}" Width="200"/>
+                            <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="100"/>
+                            <DataGridTextColumn Header="Term" Binding="{Binding TermName}" Width="150"/>
+
+                            <!-- Remove Button -->
+                            <DataGridTemplateColumn Header="Action" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Remove"
+                                    Padding="10,2"
+                                    Tag="{Binding CartID}"
+                                    Click="RemoveFromCart_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </StackPanel>
+
             </Grid>
+
 
             <Grid x:Name="EnrollPanel" Visibility="Collapsed">
                 <TextBlock Text="Registration View" FontSize="32" Margin="20"/>

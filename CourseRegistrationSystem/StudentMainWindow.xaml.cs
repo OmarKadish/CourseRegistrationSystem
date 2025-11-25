@@ -51,8 +51,11 @@ namespace CourseRegistrationSystem
 
             if (clicked == BtnSchedule) ShowPanel(SchedulePanel);
             else if (clicked == BtnBrowse) ShowPanel(BrowseCoursesGrid);
-            else if (clicked == BtnCart) ShowPanel(CartPanel);
-
+            else if (clicked == BtnCart)
+            {
+                ShowPanel(CartPanel);
+                LoadCart();
+            }
             else if (clicked == BtnDrop) ShowPanel(DropPanel);
             else if (clicked == BtnProfile) ShowPanel(ProfilePanel);
         }
@@ -68,7 +71,7 @@ namespace CourseRegistrationSystem
         private void BtnEnroll_Click(object sender, RoutedEventArgs e)
         {
 
-            var enrollWindow = new EnrollmentWindow();
+            var enrollWindow = new EnrollmentWindow(_currentUser);
             enrollWindow.Owner = this;
             enrollWindow.ShowDialog();
         }
@@ -109,11 +112,44 @@ namespace CourseRegistrationSystem
             var courses = dal.GetAllCourses();
             BrowseCoursesGrid.ItemsSource = courses;
         }
+        private void LoadCart()
+        {
+            var dal = new DALCourseInfo();
+            var items = dal.GetCartItems(_currentUser.UserID);
+
+            CartGrid.ItemsSource = items;
+        }
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
-            {
+            Button btn = sender as Button;
+            int courseId = Convert.ToInt32(btn.Tag); 
+            int studentId = _currentUser.UserID;
 
+            DALCourseInfo dal = new DALCourseInfo();
+
+            try
+            {
+                bool result = dal.AddToCart(studentId, courseId);
+
+                if (result)
+                    MessageBox.Show("Course added to cart successfully!");
+                else
+                    MessageBox.Show("Course is already in your cart.", "Duplicate", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to add course to cart: " + ex.Message, "Error");
+            }
+        }
+        private void RemoveFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            int cartId = Convert.ToInt32(btn.Tag);
+
+            var dal = new DALCourseInfo();
+            dal.RemoveFromCart(cartId);
+
+            LoadCart(); // refresh
         }
 
     }

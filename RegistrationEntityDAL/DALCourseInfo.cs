@@ -87,21 +87,34 @@ namespace RegistrationEntityDAL
             return res;
         }
 
-        public bool AddCourse(string courseCode, string courseName, string description, int credits)
+        public int AddCourse(string courseCode, string courseName, string description, int credits)
         {
             using (SqlConnection conn = new SqlConnection(Properties.Settings.Default.DbContext))
             {
-                conn.Open();
-                string query = @"INSERT INTO Course (CourseCode, CourseName, Description, Credits) 
+                try
+                {
+                    conn.Open();
+                    string query = @"INSERT INTO Course (CourseCode, CourseName, Description, Credits) 
                            VALUES (@CourseCode, @CourseName, @Description, @Credits)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@CourseCode", courseCode);
-                cmd.Parameters.AddWithValue("@CourseName", courseName);
-                cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Credits", credits);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@CourseCode", courseCode);
+                    cmd.Parameters.AddWithValue("@CourseName", courseName);
+                    cmd.Parameters.AddWithValue("@Description", description);
+                    cmd.Parameters.AddWithValue("@Credits", credits);
 
-                //conn.Open();
-                return cmd.ExecuteNonQuery() > 0;
+                    //conn.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                    return 0;
+                }
+                finally
+                {
+                    if (conn.State == ConnectionState.Open)
+                        conn.Close();
+                }
             }
         }
 
@@ -283,6 +296,106 @@ namespace RegistrationEntityDAL
 
             return list;
         }
+
+        public bool AddToCart(int studentId, int courseId)
+        {
+            string connString = Properties.Settings.Default.DbContext;
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string query = @"
+            INSERT INTO Cart (StudentID, SectionID)
+            SELECT @StudentID, S.SectionID
+            FROM Section S
+            WHERE S.CourseID = @CourseID
+                AND S.Capacity > S.CurrentEnrollment;";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+                    cmd.Parameters.AddWithValue("@CourseID", courseId);
+
+                    try
+                    {
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                    catch (SqlException ex)
+                    {
+                        if (ex.Number == 2627)
+                            return false;
+
+                        throw;
+                    }
+                }
+            }
+        }
+        public List<CartItemData> GetCartItems(int studentId)
+        {
+            List<CartItemData> list = new List<CartItemData>();
+            string connString = Properties.Settings.Default.DbContext;
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string query = @"
+        SELECT 
+            C.CourseCode,
+            C.CourseName,
+            C.Credits,
+            I.FirstName + ' ' + I.LastName AS InstructorName,
+            S.Room,
+            T.TermName,
+            Cart.CartID
+        FROM Cart
+        JOIN Section S ON Cart.SectionID = S.SectionID
+        JOIN Course C ON S.CourseID = C.CourseID
+        JOIN Instructor I ON S.InstructorID = I.InstructorID
+        JOIN Term T ON S.TermID = T.TermID
+        WHERE Cart.StudentID = @StudentID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        list.Add(new CartItemData
+                        {
+                            CartID = Convert.ToInt32(reader["CartID"]),
+                            CourseCode = reader["CourseCode"].ToString(),
+                            CourseName = reader["CourseName"].ToString(),
+                            Credits = Convert.ToInt32(reader["Credits"]),
+                            InstructorName = reader["InstructorName"].ToString(),
+                            Room = reader["Room"].ToString(),
+                            TermName = reader["TermName"].ToString()
+                        });
+                    }
+                }
+            }
+
+            return list;
+        }
+        public void RemoveFromCart(int cartId)
+        {
+            string connString = Properties.Settings.Default.DbContext;
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                string query = "DELETE FROM Cart WHERE CartID = @CartID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CartID", cartId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
     }
 }

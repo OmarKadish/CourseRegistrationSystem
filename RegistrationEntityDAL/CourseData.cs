@@ -27,4 +27,14 @@ namespace RegistrationEntityDAL
 
         public ObservableCollection<PrerequisiteData> Prerequisites { get; } = new ObservableCollection<PrerequisiteData>();
     }
+    public class CartItemData
+    {
+        public int CartID { get; set; }
+        public string CourseCode { get; set; }
+        public string CourseName { get; set; }
+        public int Credits { get; set; }
+        public string InstructorName { get; set; }
+        public string Room { get; set; }
+        public string TermName { get; set; }
+    }
 }

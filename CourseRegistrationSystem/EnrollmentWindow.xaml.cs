@@ -22,12 +22,14 @@ namespace CourseRegistrationSystem
     public partial class EnrollmentWindow : Window
     {
         private readonly DALEnrollment _dalEnrollment;
-
-        public EnrollmentWindow()
+        private UserData _currentUser;
+        public EnrollmentWindow(UserData user)
         {
             InitializeComponent();
             _dalEnrollment = new DALEnrollment();
+            _currentUser = user;
             LoadTerms();
+            LoadCartItems();
         }
 
         private void LoadTerms()
@@ -68,7 +70,13 @@ namespace CourseRegistrationSystem
                 MessageBox.Show("No courses matched your search.", "No Results", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
+        private void LoadCartItems()
+        {
+            var dal = new DALCourseInfo();
+            int studentId = _currentUser.UserID; 
+            var items = dal.GetCartItems(studentId);
+            CartGrid.ItemsSource = items;
+        }
         private void EnrollButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is CourseSearchResult selectedCourse)
@@ -76,10 +84,50 @@ namespace CourseRegistrationSystem
                 MessageBox.Show($"Enrollment logic pending for {selectedCourse.CourseCode}.", "Enroll", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+        private void EnrollFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            int sectionId = Convert.ToInt32(btn.Tag);
+            int studentId = _currentUser.UserID;
+
+            try
+            {
+                _dalEnrollment.EnrollStudent(studentId, sectionId);
+
+                MessageBox.Show("Successfully enrolled!", "Success");
+
+                LoadCartItems();
+                var items = _dalEnrollment.GetEnrollmentList(studentId);
+                enrollmentListGrid.ItemsSource = items;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Enrollment failed: " + ex.Message);
+            }
+        }
 
         private void enrollmentListButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Enrollment list functionality is not implemented yet.", "Coming Soon", MessageBoxButton.OK, MessageBoxImage.Information);
+            int studentId = _currentUser.UserID;
+            var items = _dalEnrollment.GetEnrollmentList(studentId);
+
+            if (items == null || !items.Any())
+            {
+                MessageBox.Show("You are not enrolled in any courses.");
+                return;
+            }
+
+            enrollmentListGrid.ItemsSource = items;
+        }
+        private void RemoveCartItem_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            int cartId = Convert.ToInt32(btn.Tag);
+
+            DALCourseInfo dal = new DALCourseInfo();
+            dal.RemoveFromCart(cartId);
+
+            LoadCartItems(); 
         }
     }
 }
